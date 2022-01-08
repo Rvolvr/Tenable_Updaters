@@ -11,9 +11,9 @@ https://helpx.adobe.com/enterprise/using/using-remote-update-manager.html
 #>
 
 $Date = Get-Date -UFormat "%Y%m%d"
-Start-Transcript -Path $Date-Adobe_Update.txt -Append
+Start-Transcript -Path logs\$Date-Adobe_Update.txt -Append
 # Pull list of names from a docuemnt
-$Collection = Import-Csv C:\Users\afleck\Documents\Tenable.csv | Select-Object -ExpandProperty NetBios
+$Collection = Import-Csv .\Tenable.csv | Select-Object -ExpandProperty NetBios
 
 # Option to use an admin account
 $sesh = Get-Credential
@@ -21,7 +21,7 @@ $sesh = Get-Credential
 Foreach ($item in $Collection) {
 
     # test to see if computer in list is online
-    $online = Test-Connection $item -quiet -count 2
+    $online = Test-Connection $item -quiet -count 1
     if ($online) {
         # Open a remote session on the named computer and run the update.
         Invoke-Command -ComputerName $item -Credential $sesh -scriptblock {

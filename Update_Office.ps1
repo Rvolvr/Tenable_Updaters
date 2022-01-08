@@ -8,9 +8,9 @@ This enters a PS Session, admin credentials may be required.
 #>
 
 $Date = Get-Date -UFormat "%Y%m%d"
-Start-Transcript -Path $Date-Office_Update.txt -Append
+Start-Transcript -Path logs\$Date-Office_Update.txt -Append
 # Pull list of names from a docuemnt
-$Collection = Import-Csv C:\Users\afleck\Documents\Tenable.csv | Select-Object -ExpandProperty NetBios
+$Collection = Import-Csv .\Tenable.csv | Select-Object -ExpandProperty NetBios
 
 # Option to use an admin account
 $sesh = Get-Credential
