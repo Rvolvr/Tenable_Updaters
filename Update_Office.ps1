@@ -23,11 +23,10 @@ Foreach ($item in $Collection) {
 
         # Open a remote session on the named computer and run the update.
         Invoke-Command -ComputerName $item -Credential $sesh -scriptblock {
-        Set-Location 'C:\Program Files\Common Files\microsoft shared\ClickToRun\';
-        & .\OfficeC2RClient.exe /changesetting Channel=Current;
-        & .\OfficeC2RClient.exe /update user
+        & 'C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeC2RClient.exe' /changesetting Channel=Current;
+        & 'C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeC2RClient.exe' /update user
         }
-        Write-Information "$item is done."
+        Resolve-DnsName $item | Select-Object -ExpandProperty IPaddress | Out-File -FilePath .\$date_Office_rescan.txt -Append
     } else {
             Write-Warning "$item is not reachable."
     }
