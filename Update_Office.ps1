@@ -10,12 +10,12 @@ This enters a PS Session, admin credentials may be required.
 $Date = Get-Date -UFormat "%Y%m%d"
 Start-Transcript -Path logs\$Date-Office_Update.txt -Append
 # Pull list of names from a docuemnt
-$Collection = Import-Csv .\Tenable.csv | Select-Object -ExpandProperty NetBios
+$Collection = Import-Csv .\Tenable.csv
 
 # Option to use an admin account
 $sesh = Get-Credential
 
-Foreach ($item in $Collection) {
+Foreach ($item in $Collection.'asset.name') {
 
     # test to see if computer in list is online
     $online = Test-Connection $item -quiet -count 2

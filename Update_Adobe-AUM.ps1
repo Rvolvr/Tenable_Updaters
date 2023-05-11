@@ -13,12 +13,12 @@ https://helpx.adobe.com/enterprise/using/using-remote-update-manager.html
 $Date = Get-Date -UFormat "%Y%m%d"
 Start-Transcript -Path logs\$Date-Adobe_Update.txt -Append
 # Pull list of names from a docuemnt
-$Collection = Import-CSV .\Tenable.csv | Select-Object -ExpandProperty NetBios
+$Collection = Import-CSV .\Tenable.csv
 
 # Option to use an admin account
 #$sesh = Get-Credential
 
-Foreach ($item in $Collection) {
+Foreach ($item in $Collection."asset.name") {
 
     # test to see if computer in list is online
     $online = Test-Path "\\$item\c$\Program Files (x86)\Common Files\Adobe\OOBE_Enterprise\RemoteUpdateManager\"
