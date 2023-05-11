@@ -4,7 +4,7 @@ Remote into other machines for updating. The base script will reach out to the N
 
 *Future Update* will provide a list of IP addresses for remediation scans.
 
-## [Update_Adobe-AUM.ps1](https://raw.githubusercontent.com/Rvolvr/Tenable_Updaters/main/Update_Adobe-AUM.ps1)
+## [Update_Adobe-RUM.ps1](https://raw.githubusercontent.com/Rvolvr/Tenable_Updaters/main/Update_Adobe-RUM.ps1)
 
 Run Remove Update Manager from CSV list exported from Tenable. Will detect Remote Update Manager executable, or copy the files to the proper destination if not found. Will output a log, IP addresses for Tenable remediation scan, and list of computers which were not able to be reached.
 
