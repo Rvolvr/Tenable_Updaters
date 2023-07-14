@@ -15,7 +15,7 @@ $Import = Import-Csv C:\temp\Import.csv
 
 # Breaking up the entries for reconstruction, then added into the final variable.
 [Array]$Results = ForEach ($entry in $Import){
-    # Trimming the "output" informaiton into usable strings using split
+    # Trimming the "output" informaiton into usable strings using split.
     $path = -split $entry.output | select-string -Pattern user
 
     # create the backbone of the new information and import.
@@ -24,16 +24,24 @@ $Import = Import-Csv C:\temp\Import.csv
         'path' = $path
     }
 }
+# The real work.
 Foreach ($vuln in $Results) {
+    # Display computer for logging.
     $vuln.computer
-    Foreach ($folder in $vuln.path){
-        $set = $folder -replace 'C:',"\\$($vuln.computer)\C$"
-        If ($(test-path -Path "\\$($vuln.computer)\C$") -eq $false){
-            Write-warning 'Offline!'
-        } elseif (Test-Path -Path $set) {
-           Write-host "Do Action"
-        } Else {
-            Write-host "File already processed"
+    # Test if online
+    If ($(test-path -Path "\\$($vuln.computer)\C$") -eq $false){
+        Write-warning 'Offline!'
+    } else {
+        # Computer is online, test for each file.
+        Foreach ($folder in $vuln.path){
+            # Change local to UNC pathing.
+            $set = $folder -replace 'C:',"\\$($vuln.computer)\C$"
+            if (Test-Path -Path $set) {
+                Write-host "Do Action"
+            } Else {
+                Write-host "File already processed"
+            }
+            # This line can be added to resolve hostname and export IPs for later Tenable remediation scans.
         }
     }
 }
